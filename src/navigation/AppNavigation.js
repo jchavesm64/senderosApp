@@ -10,16 +10,17 @@ const Tab = createBottomTabNavigator();
  
 export function AppNavigation(){ 
     return ( 
-        <Tab.Navigator screenOptions={({route }) => ({ 
-                tabBarActiveTintColor: "#00a680", 
-                tabBarInactiveTintColor: "#646464", 
-                tabBarIcon: ({color, size}) =>  TabscreenOptions(route, color, size)})}> 
+        <Tab.Navigator 
+        screenOptions={({ route }) => ({ 
+            tabBarStyle: { backgroundColor: "#2b2b2b" },
+            tabBarActiveTintColor: "#00a680", 
+            tabBarInactiveTintColor: "#646464", 
+            tabBarIcon: ({ color, size }) => TabscreenOptions(route, color, size),
+                })}
+            > 
             <Tab.Screen name="Senderos" component={Senderos} options={{title: "Senderos"}}/>
             <Tab.Screen name="Rutas" component={Rutas} options={{title: "Rutas"}}/>
             <Tab.Screen name="Ajustes" component={Ajustes} options={{title: "Ajustes"}}/>
-
-
-             
         </Tab.Navigator> 
     ); 
  
