@@ -4,9 +4,7 @@ import React from 'react'
 export function Rutas() { 
   return ( 
     <View> 
-      <Text style={{textAlign: 'center', marginTop: 300
-
-      }}>Rutas</Text>
+      <Text className='bg-red-500 font-bold m-5' >Rutas</Text>
     </View> 
   ) 
 }
