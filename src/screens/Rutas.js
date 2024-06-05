@@ -6,7 +6,7 @@ export function Rutas() {
     <View> 
       <Text style={{textAlign: 'center', marginTop: 300
 
-      }}>Rutas</Text>
+      }}>Rutasss</Text>
     </View> 
   ) 
 }
