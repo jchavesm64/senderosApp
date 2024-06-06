@@ -1,26 +1,57 @@
-import { View, Text, Button } from "react-native";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { View, Text, Button, ScrollView } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import NetInfo from "@react-native-community/netinfo";
+import { Icon } from "react-native-elements";
 import myDataJson from "../screens/ubi.json";
-export function Senderos() {
 
+const StoredDataDisplay = ({ storedData }) => {
+    return (
+        <View>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Datos guardados:</Text>
+            <Text style={{ fontSize: 16 }}>{JSON.stringify(storedData, null, 2)}</Text>
+        </View>
+    );
+};
+
+export function Senderos() {
     const [data, setData] = useState(myDataJson);
     const [storedData, setStoredData] = useState("");
+    const [isConnected, setIsConnected] = useState(true);
+
     function getStringBytesSize(str) {
         return new Blob([str]).size;
     }
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-              await AsyncStorage.setItem("myData", JSON.stringify(data));
+                await AsyncStorage.setItem("myData", JSON.stringify(data));
                 const storedData = await AsyncStorage.getItem("myData");
-                setStoredData(storedData);
+                setStoredData(storedData ? JSON.parse(storedData) : "");
             } catch (error) {
                 console.error("Error retrieving data:", error);
             }
         };
         fetchData();
-    }, []);
+    }, [data]);
+
+    useEffect(() => {
+        const unsubscribe = NetInfo.addEventListener(state => {
+            if (state.isConnected) {
+                // Hay conexión a Internet, elimina los datos guardados y actualiza los datos cargados
+                clearData();
+                setData(myDataJson); // Actualiza los datos cargados con el contenido de ubi.json
+            } else {
+                // No hay conexión a Internet, guarda los datos y actualiza el estado
+                saveData();
+                setStoredData(data);
+            }
+            setIsConnected(state.isConnected);
+        });
+
+        return () => unsubscribe();
+    }, [data]);
 
     const saveData = async () => {
         try {
@@ -31,14 +62,32 @@ export function Senderos() {
         }
     };
 
-    return (
-        <View>
-            <Text style={{ textAlign: "center", padding: 100 }}>Senderos</Text>
-            <Text>Tamaño de datos guardados: {getStringBytesSize(storedData)/ (1024 * 1024) } mb</Text>
+    const clearData = async () => {
+        try {
+            await AsyncStorage.removeItem("myData");
+            setStoredData("");  // Clear the state as well
+            console.log("Data cleared successfully!");
+        } catch (error) {
+            console.error("Error clearing data:", error);
+        }
+    };
 
-            <Text>Datos cargados: {JSON.stringify(data)}</Text>
+    return (
+        <ScrollView style={{ flex: 1, padding: 20 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', padding: 10 }}>
+                <Icon
+                    name="cloud"
+                    type="font-awesome"
+                    color={isConnected ? 'green' : 'red'}
+                    size={24}
+                />
+            </View>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Senderos</Text>
+            <Text>Tamaño de datos guardados: {(getStringBytesSize(JSON.stringify(storedData)) / (1024 * 1024)).toFixed(2)} MB</Text>
+            <Text style={{ fontSize: 16 }}>Datos cargados: {JSON.stringify(data, null, 2)}</Text>
             <Button title="Guardar" onPress={saveData} />
-            <Text>Datos guardados: {storedData}</Text>
-        </View>
+            <Button title="Eliminar datos cargados" onPress={clearData} />
+            <StoredDataDisplay storedData={storedData} />
+        </ScrollView>
     );
 }
