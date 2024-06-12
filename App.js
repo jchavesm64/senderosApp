@@ -7,7 +7,6 @@ import { EmergencyButton } from "./src/components/EmergencyButton";
 import { EmergencyProvider, EmergencyContext } from './src/context/EmergencyContext';
 import Emergency from './src/screens/Emergency';
 import { Text } from 'react-native';
-
 Text.defaultProps = {
   style: {
     fontFamily: 'sans-serif',

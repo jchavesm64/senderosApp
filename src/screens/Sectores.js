@@ -3,11 +3,11 @@ import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react
 import { Card, Button, Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 const data = [
-    { id: '1', title: 'Laguna', description: 'Lorem ipsum dolor', image: require('../utils/laguna.jpg') },
-    { id: '2', title: 'Espejos de agua', description: 'Lorem ipsum dolor', image: require('../utils/laguna.jpg') },
-    { id: '3', title: 'Zompopas', description: 'Lorem ipsum dolor', image: require('../utils/laguna.jpg') },
-    { id: '4', title: 'Árboles de Cedro', description: 'Lorem ipsum dolor', image: require('../utils/laguna.jpg') },
-    { id: '5', title: 'Caña India', description: 'Lorem ipsum dolor', image: require('../utils/laguna.jpg') },
+    { id: '1', title: 'Laguna', description: 'Lorem ipsum dolor', image: require('../utils/laguna.jpeg') },
+    { id: '2', title: 'Espejos de agua', description: 'Lorem ipsum dolor', image: require('../utils/laguna.jpeg') },
+    { id: '3', title: 'Zompopas', description: 'Lorem ipsum dolor', image: require('../utils/laguna.jpeg') },
+    { id: '4', title: 'Árboles de Cedro', description: 'Lorem ipsum dolor', image: require('../utils/laguna.jpeg') },
+    { id: '5', title: 'Caña India', description: 'Lorem ipsum dolor', image: require('../utils/laguna.jpeg') },
 ];
 
 export function Sectores({ route }) {

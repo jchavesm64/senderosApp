@@ -25,7 +25,7 @@ export function SectoresInfo  ()  {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../utils/arbol.jpg')}
+        source={require('../utils/laguna.jpeg')}
         style={styles.backgroundImage}
       />
       <View style={styles.infoContainer}>
