@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Icon } from "react-native-elements";
-import {Senderos} from "../screens/Senderos";
+import {SenderosStack} from "./SenderosStack";
 import {Rutas} from "../screens/Rutas";
 import {Ajustes} from "../screens/Ajustes";
 import { Emergency } from "../screens/Emergency";
@@ -11,9 +11,6 @@ export const EmergencyStateContext = createContext();
 const Tab = createBottomTabNavigator();
  
 export function AppNavigation() { 
-    
-
-    
     return ( 
         <>
             <Tab.Navigator screenOptions={({ route }) => ({ 
@@ -21,7 +18,7 @@ export function AppNavigation() {
                 tabBarInactiveTintColor: "#646464", 
                 tabBarIcon: ({ color, size }) =>  TabscreenOptions(route, color, size)
             })}> 
-                <Tab.Screen name="Senderos" component={Senderos} options={{ title: "Senderos" }}/>
+                <Tab.Screen name="Senderos" component={SenderosStack} options={{ title: "Senderos" }}/>
                 <Tab.Screen name="Rutas" component={Rutas} options={{ title: "Rutas" }}/>
                 <Tab.Screen name="Ajustes" component={Ajustes} options={{ title: "Ajustes" }}/>
             </Tab.Navigator> 
