@@ -1,43 +1,64 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import { Image, View } from 'react-native';
-import MapView, { Marker, Polyline } from 'react-native-maps';
+import MapView, { Marker, Polyline,PROVIDER_GOOGLE } from 'react-native-maps';
 import { useLocation } from '../../hooks/useLocation';
+import { senderoLaguna,senderoPrincipal,senderoCircuitoAnillo,senderoLup} from './../../util/coordenates.ts';
 
 export default function Maps(){
     const {userLocation,errorMsg,setLocation} = useLocation();
+    const [closedLocation, setClosedLocation] = useState(null);
 
+    function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+        var R = 6371; // Radius of the earth in km
+        var dLat = deg2rad(lat2-lat1);  // deg2rad below
+        var dLon = deg2rad(lon2-lon1); 
+        var a = 
+          Math.sin(dLat/2) * Math.sin(dLat/2) +
+          Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+          Math.sin(dLon/2) * Math.sin(dLon/2)
+          ; 
+        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+        var d = R * c; // Distance in km
+        return d;
+      }
+      
+      function deg2rad(deg) {
+        return deg * (Math.PI/180)
+      }
+      
+      function findClosestLocation(userLocation, locations) {
+        let closestLocation;
+        let closestDistance = Infinity;
+      
+        locations.forEach(location => {
+          const distance = getDistanceFromLatLonInKm(userLocation.latitude, userLocation.longitude, location.latitude, location.longitude);
+          if (distance < closestDistance) {
+            closestDistance = distance;
+            closestLocation = location;
+          }
+        });
+        setClosedLocation(closestLocation)
+        return closestLocation;
+      }
+
+    useEffect(() => {
+        if(userLocation){
+            const closestLocation = findClosestLocation(userLocation, senderoLup);
+            console.log('aqui',closestLocation)
+        }
+    },[userLocation])
 
     return ( 
         <View> 
-            <MapView style={{width: '100%', height: "100%"}} 
-            initialRegion={userLocation}>
+            <MapView style={{width: '100%', height: "100%"}} initialRegion={userLocation}
+            allGesturesEnabled={true} provider={PROVIDER_GOOGLE} >
                 <Marker  coordinate={{latitude: userLocation.latitude, longitude: userLocation.longitude}} >
                 <Image source={require('./../../../public/map-icons.png')} style={{width: 26, height: 26, borderRadius: 15}}/>
                 </Marker>
                 <Polyline
-                    coordinates={[
-                    { latitude: 9.379102, longitude: -83.691324, },
-                    { latitude: 9.379621, longitude: -83.692164},
-                    { latitude: 9.379546, longitude: -83.692287},
-                    { latitude: 9.378241, longitude: -83.693174},
-                    { latitude: 9.378241, longitude: -83.693174},
-                    { latitude: 9.377801, longitude: -83.693370},
-                    { latitude: 9.377709, longitude: -83.693557},
-                    { latitude: 9.377860, longitude: -83.693679},
-                    { latitude: 9.378208, longitude: -83.693453},
-
-                  
-                    ]}
-                    strokeColor="blue" // fallback for when `strokeColors` is not supported by the map-provider
-                    strokeColors={[
-                    '#7F0000',
-                    '#00000000', // no color, creates a "long" gradient between the previous and next coordinate
-                    '#B24112',
-                    '#E5845C',
-                    '#238C23',
-                    '#7F0000',
-                    ]}
-                    strokeWidth={6}
+                    coordinates={senderoLup||[]}
+                    strokeColor="blue" 
+                    strokeWidth={3}
                 />
             </MapView>
         </View> 
