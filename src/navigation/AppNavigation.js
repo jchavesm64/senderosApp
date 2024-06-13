@@ -4,6 +4,7 @@ import {Senderos} from "../screens/Senderos";
 import {Rutas} from "../screens/Rutas";
 import {Ajustes} from "../screens/Ajustes";
 import { FormularioNombre } from "../screens/FormularioNombre";
+import { RegisterNumberScreen } from "../screens/RegisterNumberScreen";
 
 
 
@@ -19,7 +20,7 @@ export function AppNavigation(){
             tabBarIcon: ({ color, size }) => TabscreenOptions(route, color, size),
                 })}
             > 
-            <Tab.Screen name="Senderos" component={FormularioNombre} options={{title: "Senderos"}}/>
+            <Tab.Screen name="Senderos" component={RegisterNumberScreen} options={{title: "Senderos"}}/>
             <Tab.Screen name="Rutas" component={Rutas} options={{title: "Rutas"}}/>
             <Tab.Screen name="Ajustes" component={Ajustes} options={{title: "Ajustes"}}/>
         </Tab.Navigator> 
