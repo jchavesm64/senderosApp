@@ -3,8 +3,7 @@ import { Icon } from "react-native-elements";
 import { Senderos } from "../screens/Senderos";
 import { Rutas } from "../screens/Rutas";
 import { Ajustes } from "../screens/Ajustes";
-import { ChoiceNumPersons } from "../screens/ChoiceNumPersons";
-import { Personas } from "../screens/Personas";
+import { FormularioStack } from "../screens/FormularioStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -18,7 +17,7 @@ export function AppNavigation() {
                 tabBarIcon: ({ color, size }) => TabscreenOptions(route, color, size),
             })}
         >
-            <Tab.Screen name="Personas" component={Personas} options={{ title: "Personas" }} />
+            <Tab.Screen name="Personas" component={FormularioStack} options={{ title: "Personas",headerShown:false }} />
             <Tab.Screen name="Senderos" component={Senderos} options={{ title: "Senderos" }} />
             <Tab.Screen name="Rutas" component={Rutas} options={{ title: "Rutas" }} />
             <Tab.Screen name="Ajustes" component={Ajustes} options={{ title: "Ajustes" }} />

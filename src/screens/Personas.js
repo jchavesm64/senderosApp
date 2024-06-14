@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import WheelPickerExpo from 'react-native-wheel-picker-expo';
 import { Icon } from 'react-native-elements';
 
-export function Personas() {
+export function Personas({navigation}) {
   const [selectedNumber, setSelectedNumber] = useState(1);
 
   const numbers = [...Array(50).keys()].map(i => (i + 1).toString());
@@ -25,11 +25,11 @@ export function Personas() {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => console.log('Back pressed')} style={styles.buttonBack}>
+        <TouchableOpacity style={styles.buttonBack}>
           <Icon name="arrow-back" size={24} color="white" />
           <Text style={styles.buttonText}>Atrás</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => console.log('Next pressed')} style={styles.buttonNext}>
+        <TouchableOpacity onPress={() => navigation.navigate('RegisterPhone')} style={styles.buttonNext}>
           <Text style={styles.buttonText}>Siguiente</Text>
           <Icon name="arrow-forward" size={24} color="white" />
         </TouchableOpacity>

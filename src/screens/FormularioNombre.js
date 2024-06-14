@@ -2,7 +2,7 @@ import { View, Text, TextInput, SafeAreaView, TouchableOpacity, StyleSheet } fro
 import React, { useState } from "react";
 import { Icon } from "react-native-elements";
 
-export function FormularioNombre() {
+export function FormularioNombre({navigation}) {
   const [text, onChangeText] = useState('');
 
   return (
@@ -21,11 +21,11 @@ export function FormularioNombre() {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={() => console.log('Back pressed')} style={styles.buttonBack}>
+      <TouchableOpacity onPress={() => navigation.navigate('RegisterPhone')} style={styles.buttonBack}>
           <Icon name="arrow-back" size={24} color="white" />
-          <Text style={styles.buttonText}></Text>
+          <Text style={styles.buttonText}>Atrás</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => console.log('Next pressed')} style={styles.buttonNext}>
+        <TouchableOpacity  style={styles.buttonNext}>
           <Text style={styles.buttonText}>Siguiente</Text>
           <Icon name="arrow-forward" size={24} color="white" />
         </TouchableOpacity>
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: "#1d1d1d",
-    paddingTop: 20,
+    paddingTop: 60,
   },
   titleContainer: {
     justifyContent: 'center',
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   title: {
-    fontSize: 16,
+    fontSize: 30,
     fontWeight: "900",
     textAlign: "center",
     color: "white",
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+    paddingTop: 60,
     paddingHorizontal: 16,
     marginBottom: 40,
   },
