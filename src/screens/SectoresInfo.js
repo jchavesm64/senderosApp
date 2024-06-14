@@ -1,37 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Audio } from 'expo-av';
-export function SectoresInfo  ()  {
+
+export function SectoresInfo() {
   const [isPlaying, setIsPlaying] = useState(false);
-  const soundObject = new Audio.Sound();
+  const [soundObject, setSoundObject] = useState(null);
+
+  useEffect(() => {
+    return () => {
+      if (soundObject) {
+        soundObject.unloadAsync();
+      }
+    };
+  }, [soundObject]);
+
   const playAudio = async () => {
     try {
-      await soundObject.loadAsync(require('../utils/audio.mp3'));
-      if (isPlaying) {
-        await soundObject.stopAsync();
-        await soundObject.unloadAsync();
-        setIsPlaying(false);
-        return;
-      }
-      else {
-        await soundObject.playAsync();
+      if (!soundObject) {
+        const { sound } = await Audio.Sound.createAsync(require('../utils/audio.m4a'));
+        setSoundObject(sound);
+        await sound.playAsync();
         setIsPlaying(true);
+      } else {
+        if (isPlaying) {
+          await soundObject.pauseAsync();
+          setIsPlaying(false);
+        } else {
+          await soundObject.playAsync();
+          setIsPlaying(true);
+        }
       }
     } catch (error) {
       console.error('Error al cargar el audio:', error);
     }
   };
+
   return (
     <View style={styles.container}>
       <Image
-        source={require('../utils/laguna.jpeg')}
+        source={require('../utils/sedro.jpeg')}
         style={styles.backgroundImage}
       />
       <View style={styles.infoContainer}>
         <View style={styles.infoBox}>
           <Text style={styles.infoTitle}>Nombre</Text>
-          <Text style={styles.infoValue}>Lugar 1</Text>
+          <Text style={styles.infoValue}>Sedro</Text>
         </View>
         <View style={styles.infoBox}>
           <Text style={styles.infoTitle}>Punto</Text>
@@ -45,22 +59,30 @@ export function SectoresInfo  ()  {
       <View style={styles.descriptionContainer}>
         <Text style={styles.descriptionTitle}>Descripción</Text>
         <Text style={styles.descriptionText}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea.
+          El cedro amargo nombre científico cedrela odorata, familia botánica meliaceae, es un árbol nativo de Costa Rica conocido por su madera y conocidas flores. Se puede encontrar desde México hasta Suramérica y el Caribe, desde el nivel del mar hasta aproximadamente 1400 metros de elevación.
         </Text>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={[styles.button, styles.startButton]}>
+      <TouchableOpacity style={[styles.button, styles.startButton]}>
           <Icon name="hiking" type="font-awesome-5" color="white" size={20} />
           <Text style={styles.buttonText}>Iniciar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.button, styles.listenButton]} onPress={() => playAudio()}>
-          <Icon name="headphones" type="font-awesome-5" color="white" size={20} />
-          <Text style={styles.buttonText}>Escuchar</Text>
+        <TouchableOpacity
+          style={[styles.button, styles.listenButton]}
+          onPress={playAudio}
+        >
+          <Icon
+            name={isPlaying ? 'pause' : 'play'}
+            type="font-awesome"
+            color="white"
+            size={20}
+          />
+          <Text style={styles.buttonText}>{isPlaying ? 'Pausar' : 'Reproducir'}</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -85,6 +107,9 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     width: '30%',
+  },
+  startButton: {
+    backgroundColor: '#32CD32',
   },
   infoTitle: {
     color: 'grey',
@@ -119,9 +144,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 15,
     width: '40%',
-  },
-  startButton: {
-    backgroundColor: '#32CD32',
   },
   listenButton: {
     backgroundColor: '#00CED1',

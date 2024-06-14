@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 const trails = [
   { id: '1', title: 'Sendero Laguna Las Garzas', description: 'Este sendero cuenta con 350 metros de distancia, un circuito corto alrededor de la Laguna.', image: require('../utils/laguna.jpeg') },
   { id: '2', title: 'Sendero Los Cedros', description: 'Este sendero cuenta con un recorrido de 1280 metros, con un recorrido para admirar la naturaleza.', image: require('../utils/sedro.jpeg') },
-  { id: '3', title: 'Sendero La Cotinga', description: 'Este sendero cuenta con un largo de 1600 metros, un sendero diseñado para ejercitarse temprano por la mañana o hacer un trote suave que active el cuerpo.', image: require('../utils/sedro2.jpeg') },
+  { id: '3', title: 'Sendero La Cotinga', description: 'Este sendero cuenta con un largo de 1600 metros, un sendero diseñado para ejercitarse temprano por la mañana', image: require('../utils/sedro2.jpeg') },
 ];
 
 export function Senderos  () {
