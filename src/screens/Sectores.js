@@ -3,11 +3,11 @@ import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react
 import { Card, Button, Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 const data = [
-    { id: '1', title: 'Laguna', description: 'Lorem ipsum dolor', image: require('../utils/laguna.jpeg') },
-    { id: '2', title: 'Espejos de agua', description: 'Lorem ipsum dolor', image: require('../utils/laguna.jpeg') },
-    { id: '3', title: 'Zompopas', description: 'Lorem ipsum dolor', image: require('../utils/laguna.jpeg') },
-    { id: '4', title: 'Árboles de Cedro', description: 'Lorem ipsum dolor', image: require('../utils/laguna.jpeg') },
-    { id: '5', title: 'Caña India', description: 'Lorem ipsum dolor', image: require('../utils/laguna.jpeg') },
+    { id: '1', title: 'Laguna', description: 'Lagunas de los atolones: suelen ser lagunas más raras y bonitas.', image: require('../utils/laguna.jpeg') },
+    { id: '2', title: 'Espejos de agua', description: 'Se suelen producir en invierno y son resultado de la acumulación de agua y lluvias', image: require('../utils/laguna.jpeg') },
+    { id: '3', title: 'Zompopas', description: 'Las zompopas reciben el nombre científico de “Atta cephalotes” y es una de especie perteneciente a las hormigas cortadoras de hojas.', image: require('../utils/laguna.jpeg') },
+    { id: '4', title: 'Árboles de Cedro', description: 'El cedro amargo nombre científico cedrela odorata, familia botánica meliaceae, es un árbol nativo de Costa Rica conocido por su madera y conocidas flores.', image: require('../utils/laguna.jpeg') },
+    { id: '5', title: 'Caña India', description: 'La Dracaena fragrans mejor conocida como caña india su familia botánica es la Agavaceae, (Nature Garden) también es conocida como planta dragón, tallo de maíz, planta feliz y caña.', image: require('../utils/laguna.jpeg') },
 ];
 
 export function Sectores({ route }) {
