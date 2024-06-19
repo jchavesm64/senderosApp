@@ -68,8 +68,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import NetInfo from "@react-native-community/netinfo";
 import React, { useState, useEffect } from "react";
 
-const useAsyncStorage = (key) => {
+const useAsyncStorage = (key, initialData) => {
     const [isConnected, setIsConnected] = useState(true);
+    const [data, setData] = useState(initialData);
 
     const storeData = async (value) => {
         try {
@@ -78,20 +79,6 @@ const useAsyncStorage = (key) => {
             console.error("Error storing data:", e);
         }
     };
-    useEffect(() => {
-        const unsubscribe = NetInfo.addEventListener((state) => {
-            if (state.isConnected) {
-                // Hay conexión a Internet, elimina los datos guardados y actualiza los datos cargados
-                removeData();
-            } else {
-                // No hay conexión a Internet, guarda los datos y actualiza el estado
-                storeData();
-            }
-            setIsConnected(state.isConnected);
-        });
-
-        return () => unsubscribe();
-    }, []);
 
     const getData = async () => {
         try {
@@ -111,7 +98,32 @@ const useAsyncStorage = (key) => {
         }
     };
 
-    return { storeData, getData, removeData };
+    useEffect(() => {
+        const checkInitialData = async () => {
+            const storedData = await getData();
+            if (storedData !== null) {
+                setData(storedData);
+            }
+        };
+
+        checkInitialData();
+
+        const unsubscribe = NetInfo.addEventListener((state) => {
+            if (state.isConnected) {
+                // Hay conexión a Internet, elimina los datos guardados y actualiza los datos cargados
+                removeData();
+                setData(initialData);  // Actualiza con los datos actuales
+            } else {
+                // No hay conexión a Internet, guarda los datos y actualiza el estado
+                storeData(data);  // Asegúrate de almacenar los datos actuales
+            }
+            setIsConnected(state.isConnected);
+        });
+
+        return () => unsubscribe();
+    }, [data, initialData, key]);
+
+    return { data, setData, storeData, getData, removeData, isConnected };
 };
 
 export default useAsyncStorage;

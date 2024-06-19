@@ -2,17 +2,17 @@
 // import { View, Text, Button, ScrollView } from "react-native";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 // import NetInfo from "@react-native-community/netinfo";
-// import { Icon } from "react-native-elements";
+
 // import myDataJson from "../screens/ubi.json";
 
-// const StoredDataDisplay = ({ storedData }) => {
-//     return (
-//         <View>
-//             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Datos guardados:</Text>
-//             <Text style={{ fontSize: 16 }}>{JSON.stringify(storedData, null, 2)}</Text>
-//         </View>
-//     );
-// };
+ const StoredDataDisplay = ({ storedData }) => {
+    return (
+        <View>
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Datos guardados:</Text>
+            <Text style={{ fontSize: 16 }}>{JSON.stringify(storedData, null, 2)}</Text>
+        </View>
+    );
+};
 
 // export function Senderos() {
 //     const [data, setData] = useState(myDataJson);
@@ -94,11 +94,12 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, Button, ScrollView, TextInput } from "react-native";
 import useAsyncStorage from "../hooks/useBackup";
+import { Icon } from "react-native-elements";
 
 export function Senderos() {
     const [data, setData] = useState("");
     const [newData, setNewData] = useState("");
-    const { storeData, getData, removeData } = useAsyncStorage("myKey");
+    const { storeData, getData, removeData, isConnected } = useAsyncStorage("myKey");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -129,7 +130,15 @@ export function Senderos() {
 
     return (
         <ScrollView style={{ flex: 1, padding: 20 }}>
+            
+            
             <View style={{ flexDirection: "row", justifyContent: "flex-end", padding: 10 }}>
+            <Icon
+                    name="cloud"
+                    type="font-awesome"
+                    color={isConnected ? 'green' : 'red'}
+                    size={24}
+                />
                 <Text>Dato almacenado: {data}</Text>
             </View>
             <TextInput style={{ height: 40, borderColor: "gray", borderWidth: 1, marginBottom: 10 }} onChangeText={handleUpdateData} value={newData} placeholder="Ingresa un nuevo dato" />
