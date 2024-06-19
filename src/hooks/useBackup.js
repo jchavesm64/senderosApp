@@ -72,11 +72,14 @@ const useAsyncStorage = (key, initialData) => {
     const [isConnected, setIsConnected] = useState(true);
     const [data, setData] = useState(initialData);
 
+
     const storeData = async (value) => {
-        try {
-            await AsyncStorage.setItem(key, JSON.stringify(value));
-        } catch (e) {
-            console.error("Error storing data:", e);
+        if (value !== null && value !== undefined) {
+            try {
+                await AsyncStorage.setItem(key, JSON.stringify(value));
+            } catch (e) {
+                console.error("Error storing data:", e);
+            }
         }
     };
 
@@ -110,20 +113,18 @@ const useAsyncStorage = (key, initialData) => {
 
         const unsubscribe = NetInfo.addEventListener((state) => {
             if (state.isConnected) {
-                // Hay conexión a Internet, elimina los datos guardados y actualiza los datos cargados
-                removeData();
-                setData(initialData);  // Actualiza con los datos actuales
+                removeData();  
             } else {
-                // No hay conexión a Internet, guarda los datos y actualiza el estado
-                storeData(data);  // Asegúrate de almacenar los datos actuales
+                storeData(data);  
             }
             setIsConnected(state.isConnected);
         });
 
         return () => unsubscribe();
-    }, [data, initialData, key]);
+    }, [data, key]);
 
     return { data, setData, storeData, getData, removeData, isConnected };
 };
 
 export default useAsyncStorage;
+

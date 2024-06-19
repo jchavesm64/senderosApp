@@ -97,25 +97,25 @@ import useAsyncStorage from "../hooks/useBackup";
 import { Icon } from "react-native-elements";
 
 export function Senderos() {
-    const [data, setData] = useState("");
     const [newData, setNewData] = useState("");
-    const { storeData, getData, removeData, isConnected } = useAsyncStorage("myKey");
+    const { data, setData, storeData, getData, removeData, isConnected } = useAsyncStorage("myKey", "");
 
     useEffect(() => {
         const fetchData = async () => {
             const storedData = await getData();
             if (storedData !== null) {
                 setData(storedData);
-                
             }
         };
         fetchData();
-    }, [getData]);
+    }, [getData, setData]);
 
     const handleStoreData = () => {
-        storeData(newData);
-        setData(newData);
-        setNewData("");
+        if (newData !== "") {
+            storeData(newData);
+            setData(newData);
+            setNewData("");
+        }
     };
 
     const handleRemoveData = () => {
@@ -130,10 +130,8 @@ export function Senderos() {
 
     return (
         <ScrollView style={{ flex: 1, padding: 20 }}>
-            
-            
-            <View style={{ flexDirection: "row", justifyContent: "flex-end", padding: 10 }}>
-            <Icon
+            <View style={{ flexDirection: "row", justifyContent: "space-between", padding: 10 }}>
+                <Icon
                     name="cloud"
                     type="font-awesome"
                     color={isConnected ? 'green' : 'red'}
@@ -141,10 +139,21 @@ export function Senderos() {
                 />
                 <Text>Dato almacenado: {data}</Text>
             </View>
-            <TextInput style={{ height: 40, borderColor: "gray", borderWidth: 1, marginBottom: 10 }} onChangeText={handleUpdateData} value={newData} placeholder="Ingresa un nuevo dato" />
+            {!isConnected && (
+                <View style={{ padding: 10 }}>
+                    <Text style={{ color: 'red' }}>Dato almacenado offline: {data}</Text>
+                </View>
+            )}
+            <TextInput
+                style={{ height: 40, borderColor: "gray", borderWidth: 1, marginBottom: 10 }}
+                onChangeText={handleUpdateData}
+                value={newData}
+                placeholder="Ingresa un nuevo dato"
+            />
             <Button title="Guardar dato" onPress={handleStoreData} />
             <Button title="Eliminar dato" onPress={handleRemoveData} />
             <Text style={{ fontSize: 20, fontWeight: "bold" }}>Senderos</Text>
         </ScrollView>
     );
 }
+
