@@ -1,0 +1,11 @@
+[
+    {
+        "user_id": 10,
+        "name": "Usuario2",
+        "entry_time": "2024-06-05T10:31:15.170650Z",
+        "phone_number": "+123456780000",
+        "location": {
+            "latitude": -74.956731,
+            "longitude": 141.055547
+        }
+    }]
