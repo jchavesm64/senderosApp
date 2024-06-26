@@ -25,10 +25,10 @@ export function Personas({navigation}) {
       </View>
 
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.buttonBack}>
+{/*         <TouchableOpacity style={styles.buttonBack}>
           <Icon name="arrow-back" size={24} color="white" />
           <Text style={styles.buttonText}>Atrás</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity onPress={() => navigation.navigate('RegisterPhone')} style={styles.buttonNext}>
           <Text style={styles.buttonText}>Siguiente</Text>
           <Icon name="arrow-forward" size={24} color="white" />
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     paddingHorizontal: 16,
     paddingBottom: 20,
     position: 'absolute',
