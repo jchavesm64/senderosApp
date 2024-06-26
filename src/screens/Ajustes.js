@@ -1,10 +1,22 @@
+// Ajustes.js
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Switch } from 'react-native';
+import { useTranslation } from 'react-i18next'; // Importa useTranslation desde react-i18next
 import { Icon } from 'react-native-elements';
 
-export function Ajustes  () {
+export function Ajustes() {
+  const { t } = useTranslation(); // Permite usar la función t() para traducir textos
   const [isSoundEnabled, setIsSoundEnabled] = useState(true);
   const [isDarkModeEnabled, setIsDarkModeEnabled] = useState(true);
+  const [isLanguageListVisible, setIsLanguageListVisible] = useState(false);
+
+  const toggleLanguageList = () => {
+    setIsLanguageListVisible(!isLanguageListVisible);
+  };
+
+  const changeLanguage = (language) => {
+    setIsLanguageListVisible(false); // Oculta la lista después de seleccionar un idioma
+  };
 
   return (
     <View style={styles.container}>
@@ -15,20 +27,33 @@ export function Ajustes  () {
 
       <View style={styles.divider} />
 
-      <Text style={styles.sectionTitle}>Configuración</Text>
+      <Text style={styles.sectionTitle}>{t('editProfile')}</Text>
       
       <TouchableOpacity style={styles.option}>
-        <Text style={styles.optionText}>Edit profile</Text>
+        <Text style={styles.optionText}>{t('editProfile')}</Text>
         <Icon name="chevron-right" type="feather" color="white" />
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.option}>
-        <Text style={styles.optionText}>Idioma</Text>
-        <Icon name="chevron-right" type="feather" color="white" />
+      <TouchableOpacity style={styles.option} onPress={toggleLanguageList}>
+        <Text style={styles.optionText}>{t('language')}</Text>
+        <Icon name={isLanguageListVisible ? "chevron-up" : "chevron-down"} type="feather" color="white" />
       </TouchableOpacity>
+      
+      {isLanguageListVisible && (
+        <View style={styles.languageList}>
+          <TouchableOpacity style={styles.languageOption} onPress={() => changeLanguage('es')}>
+            <Icon name="flag" type="font-awesome" size={24} color="#ec1c24" />
+            <Text style={styles.languageText}>Español</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.languageOption} onPress={() => changeLanguage('en')}>
+            <Icon name="flag" type="font-awesome" size={24} color="#0050a0" />
+            <Text style={styles.languageText}>English</Text>
+          </TouchableOpacity>
+        </View>
+      )}
 
       <View style={styles.option}>
-        <Text style={styles.optionText}>Sonidos</Text>
+        <Text style={styles.optionText}>{t('sounds')}</Text>
         <Switch
           value={isSoundEnabled}
           onValueChange={value => setIsSoundEnabled(value)}
@@ -38,7 +63,7 @@ export function Ajustes  () {
       </View>
       
       <View style={styles.option}>
-        <Text style={styles.optionText}>Dark mode</Text>
+        <Text style={styles.optionText}>{t('darkMode')}</Text>
         <Switch
           value={isDarkModeEnabled}
           onValueChange={value => setIsDarkModeEnabled(value)}
@@ -52,22 +77,22 @@ export function Ajustes  () {
       <Text style={styles.sectionTitle}>Más</Text>
       
       <TouchableOpacity style={styles.option}>
-        <Text style={styles.optionText}>Sobre el app</Text>
+        <Text style={styles.optionText}>{t('aboutApp')}</Text>
         <Icon name="chevron-right" type="feather" color="white" />
       </TouchableOpacity>
       
       <TouchableOpacity style={styles.option}>
-        <Text style={styles.optionText}>Políticas de uso</Text>
+        <Text style={styles.optionText}>{t('termsOfUse')}</Text>
         <Icon name="chevron-right" type="feather" color="white" />
       </TouchableOpacity>
       
       <TouchableOpacity style={styles.option}>
-        <Text style={styles.optionText}>Términos y condiciones</Text>
+        <Text style={styles.optionText}>{t('privacyPolicy')}</Text>
         <Icon name="chevron-right" type="feather" color="white" />
       </TouchableOpacity>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -107,4 +132,22 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
   },
+  languageList: {
+    backgroundColor: '#1e1e1e',
+    borderRadius: 5,
+    marginVertical: 10,
+    padding: 10,
+  },
+  languageOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+  },
+  languageText: {
+    color: 'white',
+    fontSize: 16,
+    marginLeft: 10,
+  },
 });
+
+export default Ajustes;
