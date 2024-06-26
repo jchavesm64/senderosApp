@@ -17,6 +17,11 @@ export function RegisterNumberScreen({navigation}) {
     setShowPicker(false);
   }
 
+  const  saveData = () => {
+    //guardar datos en la base
+    navigation.navigate('RegisterName')
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>¿Cuál es tu número de teléfono?</Text>
@@ -75,7 +80,7 @@ export function RegisterNumberScreen({navigation}) {
           <Icon name="arrow-back" size={24} color="white" />
           <Text style={styles.buttonText}>Atrás</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('RegisterName')} style={styles.buttonNext}>
+        <TouchableOpacity onPress={() => saveData()} style={styles.buttonNext}>
           <Text style={styles.buttonText}>Siguiente</Text>
           <Icon name="arrow-forward" size={24} color="white" />
         </TouchableOpacity>
@@ -87,8 +92,8 @@ export function RegisterNumberScreen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1d1d1d',
-    padding: 16,
+    backgroundColor: "#1d1d1d",
+    paddingTop: 60,
   },
   title: {
     fontSize: 20,
@@ -148,24 +153,26 @@ const styles = StyleSheet.create({
     color: '#424242',
   },
   buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-    paddingHorizontal: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingHorizontal: 16,
     paddingBottom: 20,
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
   },
   buttonNext: {
     flexDirection: "row",
     alignItems: 'center',
     padding: 10,
     backgroundColor: "#07aa6c",
-    borderRadius: 30,
+    borderRadius: 30
   },
   buttonBack: {
     flexDirection: "row",
     alignItems: 'center',
     padding: 10,
-    borderRadius: 30,
+    borderRadius: 50,
     backgroundColor: "gray",
   },
   buttonText: {

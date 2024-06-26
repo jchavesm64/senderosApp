@@ -25,7 +25,7 @@ export function FormularioNombre({navigation}) {
           <Icon name="arrow-back" size={24} color="white" />
           <Text style={styles.buttonText}>Atrás</Text>
         </TouchableOpacity>
-        <TouchableOpacity  style={styles.buttonNext}>
+        <TouchableOpacity onPress={() => navigation.navigate('MainTabs')} style={styles.buttonNext}>
           <Text style={styles.buttonText}>Siguiente</Text>
           <Icon name="arrow-forward" size={24} color="white" />
         </TouchableOpacity>
