@@ -45,7 +45,7 @@ export function Sectores({route}) {
 		<Card containerStyle={styles.card}>
 			<TouchableOpacity onPress={() => navigation.navigate('SectoresInfo', {trail: item})}>
 				<Image source={item.image} style={styles.image} />
-				<Card.Title>{item.title}</Card.Title>
+				<Card.Title style={styles.title}>{item.title}</Card.Title>
 				<Text style={styles.description}>{item.description}</Text>
 			</TouchableOpacity>
 		</Card>
@@ -73,6 +73,7 @@ export function Sectores({route}) {
 
 const styles = StyleSheet.create({
 	container: {
+	
 		flex: 1,
 		backgroundColor: '#121212',
 		paddingHorizontal: 10,
@@ -87,13 +88,23 @@ const styles = StyleSheet.create({
 		justifyContent: 'space-between',
 		marginBottom: 10,
 	},
+	title: {
+		color: 'white',
+		textAlign: 'center',
+		marginTop: 10,
+		height: 30,
+		fontSize: 18,
+	},
 	card: {
-		backgroundColor: '#333',
+		
+		backgroundColor: '#1c1c1c',
 		borderRadius: 10,
 		borderWidth: 0,
 		flex: 1,
 		marginHorizontal: 5,
 		padding: 0,
+		paddingBottom: 0,
+		
 	},
 	image: {
 		width: '100%',
@@ -102,9 +113,11 @@ const styles = StyleSheet.create({
 		borderTopRightRadius: 10,
 	},
 	description: {
-		color: 'white',
+		color: '#a8a8a8',
 		paddingHorizontal: 10,
 		paddingBottom: 10,
+		alignContent: 'center',
+		justifyContent: 'center',
 	},
 	buttonContainer: {
 		backgroundColor: '#32CD32',

@@ -37,7 +37,8 @@ export function Senderos() {
 				renderItem={({item}) => (
 					<TouchableOpacity onPress={() => navigation.navigate('Sectores', {trail: item})}>
 						<View style={styles.card}>
-							<Image source={item.image} style={styles.cardImage} />
+							
+						<Image source={item.image} style={styles.cardImage} />
 							<View style={styles.cardTextContainer}>
 								<Text style={styles.cardTitle}>{item.title}</Text>
 								<Text style={styles.cardDescription}>{item.description}</Text>
@@ -55,9 +56,11 @@ export function Senderos() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#121212',
+		backgroundColor: 'black',
 		alignItems: 'center',
 		justifyContent: 'center',
+		paddingTop: 60,
+
 	},
 	headerText: {
 		color: 'white',
@@ -69,19 +72,25 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	card: {
+		marginLeft: 10,
 		backgroundColor: '#1c1c1e',
 		borderRadius: 10,
 		overflow: 'hidden',
 		marginRight: 10,
-		width: Dimensions.get('window').width * 0.7,
-		maxWidth: 250,
+		width: 330, // Aumentado
+		height: 260, // Aumentado
+		minWidth: 330, // Aumentado
+		maxWidth: 330, // Corregido el valor
+		maxHeight: 260, // Aumentado
+		marginBottom: 70,
 	},
+	
 	cardImage: {
 		width: '100%',
 		height: 150,
 	},
 	cardTextContainer: {
-		padding: 10,
+		padding: 20,
 	},
 	cardTitle: {
 		color: 'white',
